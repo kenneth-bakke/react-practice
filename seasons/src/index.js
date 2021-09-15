@@ -1,17 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+if (module.hot) {
+  module.hot.accept();
+}
+
+class App extends React.Component {
+  constructor(props) {
+    // Reference to parents' constructor function. Must define every time.
+    super(props);
+
+    // State object that will contain useful data. This is the ONLY time we directly assign to this.state
+    this.state = { lat: null};
+
+    window.navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(position);
+        // Using setState
+        this.setState({ lat: position.coords.latitude });
+
+        // We did not do: "this.state.lat = position.coords.latitude" never do it, just. don't. do. it.
+      },
+      err => console.log(err)
+    );
+  }
+
+  render() {
+
+    return <div>Latitude: {this.state.lat}</div>;
+  }    
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'));
