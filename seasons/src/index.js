@@ -12,23 +12,33 @@ class App extends React.Component {
     super(props);
 
     // State object that will contain useful data. This is the ONLY time we directly assign to this.state
-    this.state = { lat: null};
+    this.state = { lat: null, errorMessage: ''};
 
     window.navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position);
         // Using setState
         this.setState({ lat: position.coords.latitude });
 
         // We did not do: "this.state.lat = position.coords.latitude" never do it, just. don't. do. it.
       },
-      err => console.log(err)
+      err => {
+        this.setState({ errorMessage: err.message });
+      }
     );
   }
 
-  render() {
 
-    return <div>Latitude: {this.state.lat}</div>;
+  render() {
+    // Conditional rendering in it's simplest form
+    if (this.state.errorMessage && !this.state.lat) {
+      return <div>Error: {this.state.errorMessage}</div> 
+    }
+    
+    if (!this.state.errorMessage && this.state.lat) {
+      return <div>Latitude: {this.state.lat}</div>
+    }
+
+    return <div>Loading!</div>
   }    
 }
 
