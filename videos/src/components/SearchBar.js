@@ -9,8 +9,9 @@ class SearchBar extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    
+
     // TODO: Make sure we call callback from parent component
+    this.props.onTermSubmit(this.state.term);
   };
 
   render() {
@@ -24,7 +25,7 @@ class SearchBar extends React.Component {
             value={this.state.term}
             onChange={this.onInputChange}
             autoFocus
-            placeholder="Search..." 
+            placeholder="Search"
             />
           </div>
         </form>
