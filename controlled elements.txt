@@ -1,0 +1,8 @@
+﻿FLOW |  User types in input  
+     |  Callback gets invoked
+     |  We call setState with the new value
+     |  The component re-renders
+     |  Input is told what is value is (coming from state)
+     v
+
+Note that the first part, user types in input, happens for each keystroke. 

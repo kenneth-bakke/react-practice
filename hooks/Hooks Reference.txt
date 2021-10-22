@@ -14,3 +14,49 @@ The 10 Primitive Hooks in React are:
 
 You can make custom hooks that use the primitive hooks.
 
+Detail
+1. useState
+  Returns a stateful value, and a function to update that value.
+
+  During the initial render, the returned state is the same as the value passed as the initial arg
+
+
+            value    function    useState    default
+  const [stateValue, setState] = useState(initialValue)
+
+  The setState function is used to update the state value. It accepts a new state value and
+  enqueues a re-render of the component. Must call in your component
+
+  setState(newStateValue);
+
+  During subsequent re-renders, the first value returned by useState will always be the most recent
+  state after applying updates (won't reset to initialValue)
+
+  Note from API Documentation:
+     ** React guarantees that setState function identity is stable and won’t change on re-renders.
+     ** This is why it’s safe to omit from the useEffect or useCallback dependency list.
+
+2. useEffect
+  Allows function components to use something like lifecycle methods
+    Even though we use function components, we may want to run code when "something happens"
+      EX: First render, re-render, other event
+    Would never put componentDidMount inside a function component for instance
+  We configure it when to run code automatically
+  Three Ways:
+    1. When the component is rendered for the first time only
+    2. When the component is rendered for the first time AND whenever it re-renders
+    3. When the component is rendered for the first time AND (whenever it re-renders,
+       AND some piece of data has changed)
+  useEffect takes a function as it's first arg and an optional array (only an array)
+
+  useEffect(() => {
+    // stuff
+  }, [])
+
+  [] = Run option #1        Run at initial render.
+  nothing = Run option #2   Run at initial render. Run after every re-render.
+  [data] = Run option #3    Run at initial render. Run after every re-render IF data has changed since last render
+
+  With option 3, the array element passed in is what useEffect tracks for changes. So if you have
+  [something], anytime the something variable changes, useEffect will call and re-render.
+  You can also pass multiple variables. (Note these variables are tracked via useState)

@@ -1,0 +1,68 @@
+﻿// index.js with notes. Uncomment the rest to see code with notes
+
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import SeasonDisplay from './SeasonDisplay';
+// import "semantic-ui-css/semantic.min.css";
+
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
+// // Extends allows App to use the built in methods of the React component in itself
+// class App extends React.Component {
+
+//   /** Good place to do one time setup */ 
+//   // constructor(props) {
+//   //   // Reference to parents' constructor function. Must define every time.
+//   //   super(props);
+
+//   //   // State object that will contain useful data. This is the ONLY time we directly assign to this.state
+//   //   this.state = { lat: null, errorMessage: ''};    
+//   // }
+
+//   // Alternative state set up, compare with this.state in the constructor
+//   state = {lat: null, errorMessage: ''};
+
+
+//   /** Good place to do data loaded: componentDidMount */
+//   componentDidMount() {
+//     window.navigator.geolocation.getCurrentPosition(
+//       position => this.setState({ lat: position.coords.latitude }),
+//         // We did not do: "this.state.lat = position.coords.latitude" never do it, just. don't. do. it.
+//       err => this.setState({ errorMessage: err.message })
+//     );
+//   }
+
+//   /** Good place to do more data-loading when state/props change: componentDidUpdate */
+
+
+//   /** Good place to do cleanup (especially for non-react stuff): componentWillUnmount */
+
+
+//   /** Other lifecycle methods include:
+//    * 
+//    * shouldComponentUpdate
+//    * getDeriveStateFromProps
+//    * getSnapshotBeforeUpdate
+//    * 
+//    * Frequently un-used, so we won't worry too much about this yet
+//    */
+
+
+//   /** Generally, just return jsx here. Don't make requests, fetch's etc.  */
+//   render() {
+//     // Conditional rendering in it's simplest form
+//     if (this.state.errorMessage && !this.state.lat) {
+//       return <div>Error: {this.state.errorMessage}</div> 
+//     }
+    
+//     if (!this.state.errorMessage && this.state.lat) {
+//       return <SeasonDisplay lat={this.state.lat} />
+//     }
+
+//     return <div>Loading!</div>
+//   }    
+// }
+
+// ReactDOM.render(<App />, document.querySelector('#root'));

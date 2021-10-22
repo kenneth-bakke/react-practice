@@ -1,0 +1,116 @@
+﻿What is 'this' used for in a class?
+
+  Instance of our Search Bar
+    state
+    render
+    onFormSubmit
+
+    this
+
+  this is a reference of the class itself
+
+How is the value of 'this' determined in a function?
+
+  code example:
+
+  const myvalue = 10;
+
+  myvalue
+  // 10
+
+  myvalue / 10
+  // 1
+
+  myvalue * 9999
+  // 99990
+
+
+  other example:
+
+  class Car {
+    setDriveSound(sound) {
+      this.sound = sound;
+    }
+
+    drive() {
+      return this.sound;
+    }
+  }
+
+  initialize new car class
+
+  const car = new Car();
+  car.setDriveSound('vroom');
+  car.drive()
+  // vroom
+  
+  We aren't looking at the drive() method but where we call the drive.
+
+  look at car.drive(), the variable to the left of the '.' is what 'this' will be equal to in the drive function
+  Aka the car instance of the Car class. Don't look at the function, look where the function is called. 
+
+
+  extended example we add a truck object
+
+  const truck = {
+    sound: 'putputput', 
+    driveMyTruck: car.drive
+  }
+
+  truck.driveMyTruck() will do what? Look at the left of the dot.. a truck variable. That is what 'this' will be equal to in the drive function, thus logging...:
+  // putputput
+
+
+  corner case:
+
+  const drive = car.drive; assigned without ()
+
+  drive() will return what? Same rule, what is to the left of the dot? There isn't one and nothing to the left, aka to the left of drive() is 'undefined'
+  Thus the property sound doesn't exist because the variable is not defined. 
+
+
+SOLUTIONS:
+
+A few solutions to an 'undefined' 'this' situation/error
+
+1. Add a constructor to the class
+
+class Car {
+
+  NEW CONSTRUCTOR
+  ****************************************
+    constructor() {
+      this.drive = this.drive.bind(this);
+    }
+  ****************************************
+
+    ...rest of the code...
+  }
+
+  Bind the function and overwrite the existing function. This used to be a highly recommended solution (due to legacy code)
+
+
+2. Turn the function into an arrow function instead. Back to the onFormSubmit example:
+
+  OLD
+  onFormSubmit(event) {
+    event.preventDefault();
+
+    console.log(this.state.term);
+  }
+
+  NEW
+  *********************************
+  onFormSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(this.state.term);
+  }
+  *********************************
+
+
+3. Pass an arrow function directly to the onChange prop (which is using onFormSubmit)
+
+  <form onSubmit={(event) => this.onFormSubmit(event)} className="ui form">
+
+  Now we've defined an arrow function, passed it into the form, then invoked onFormSubmit.
